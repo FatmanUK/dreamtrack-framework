@@ -1,9 +1,17 @@
 ---
+# Unique task prefix: STE
 - name: create passwords
   import_playbook: books/create-vault.yml
 
-#- name: debug
-#  hosts: freebsd-kvm-hosts
-#  roles:
-#  - FreeBSD-KVM-Setup
+- name: add me to hosts using ansible user
+  hosts: all
+  remote_user: ansible
+  roles:
+  - POSIX-AddUser
+
+- name: install KVM
+  vars_files: vaults/dreamtrack.yml
+  hosts: freebsd_kvm_hosts
+  roles:
+  - FreeBSD-KVM-Setup
 ...
