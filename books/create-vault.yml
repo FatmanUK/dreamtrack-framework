@@ -1,17 +1,18 @@
 ---
+# Unique prefix: CRV
 # Create a random Ansible password vault based on the settings in vault-settings.yml
 # Test the vault created using test-vault.yml
 # $ ansible-playbook books/create-vault.yml
-- name: create a random vault
+- name: Create a random vault
   hosts: localhost
   vars_files: ../vars/vault-settings.yml
   tasks:
 
-  - name: create secret
+  - name: CRV-7636
     set_fact:
       pw: "{{ lookup('password', '/dev/null length=32') }}"
 
-  - name: save vault secret
+  - name: CRV-9844
     become: no
     local_action:
       module: copy
@@ -19,16 +20,16 @@
       dest: ../vaults/secret
       mode: '0400'
 
-  - name: generate passwords
+  - name: CRV-7578
     loop: '{{ passwords }}'
     set_fact:
       gen_pw: '{{ gen_pw | default({}) | combine({ "password_%s" % item.name: lookup("password", "/dev/null %s" % item.generator) }) }}'
 
-  - name: generate random temp filename
+  - name: CRV-2649
     set_fact:
       random_filename: 'tempfile-{{ lookup("password", "/dev/null length=8 chars=ascii_lowercase,digits") }}'
 
-  - name: write passwords in plaintext to RAM disk file
+  - name: CRV-5643
     become: no
     with_dict: '{{ gen_pw }}'
     no_log: True
@@ -38,7 +39,7 @@
       line: '{{ item.key }}: {{ item.value }}'
       dest: /dev/shm/{{ random_filename }}
 
-  - name: encrypt plaintext vault
+  - name: CRV-9223
     become: no
     local_action:
       module: command
