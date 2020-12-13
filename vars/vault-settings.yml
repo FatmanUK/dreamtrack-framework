@@ -1,0 +1,11 @@
+---
+- vault_name: dreamtrack.yml
+
+- passwords:
+  - name: test
+    generator: length=32 
+  - name: test2
+    generator: length=32 
+  - name: test3
+    generator: length=32 
+...
