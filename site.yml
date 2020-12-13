@@ -1,0 +1,5 @@
+---
+- name: debug
+  hosts: freebsd-kvm-hosts
+  roles:
+  - FreeBSD-KVM-Setup
