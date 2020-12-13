@@ -1,5 +1,9 @@
 ---
-- name: debug
-  hosts: freebsd-kvm-hosts
-  roles:
-  - FreeBSD-KVM-Setup
+- name: create passwords
+  import_playbook: books/create-vault.yml
+
+#- name: debug
+#  hosts: freebsd-kvm-hosts
+#  roles:
+#  - FreeBSD-KVM-Setup
+...
