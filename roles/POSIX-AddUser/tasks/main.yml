@@ -1,0 +1,30 @@
+---
+# Unique prefix: PAU
+- name: PAU-2845
+  group:
+    name: ansible
+
+- name: PAU-2647
+  set_fact:
+    my_username: '{{ lookup("env", "USER") }}'
+
+- name: PAU-4223
+  user:
+    name: '{{ my_username }}'
+    group: ansible
+
+- name: PAU-6352
+  authorized_key:
+    user: '{{ my_username }}'
+    key: '{{ lookup("file", "~%s/.ssh/id_rsa.pub" % my_username) }}'
+
+# FreeBSD: /usr/local/etc/sudoers.d/ansible, /usr/local/sbin/visudo
+# Linux: /etc/sudoers.d/ansible, /usr/bin/visudo
+- name: PAU-6785
+  copy:
+    content: |
+      %ansible ALL=(ALL) NOPASSWD: ALL
+    dest: /usr/local/etc/sudoers.d/ansible
+    validate: /usr/local/sbin/visudo -c %s
+...
+
